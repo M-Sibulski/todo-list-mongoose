@@ -1,0 +1,61 @@
+<%- include("partials/header") -%>
+    <div class="card">
+        <div class="back">
+            <a href= <%="/"+list.name%> ><i class="fa-solid fa-angle-left fa-2xl back-icon"></i></a>
+        </div>
+        <form action="/itemUpdate" method="post">
+            <div class="title">
+                <div class="item-title">
+                    <% if (item.taskCompleted) 
+                        {%><input class="checkbox" type="checkbox" name="taskCompleted" checked>
+                    <%} else {%><input class="checkbox" type="checkbox" name="taskCompleted"><%}%>
+                    <input class="task-title" type="text" name="taskTitle" value="<%= item.taskName %>" autocomplete="off">
+                    <input type="hidden" name="listId" value= <%= list._id %>>
+                    <h3>From <%= list.name %> 's list</h3>
+                </div>
+                
+                
+            </div>
+
+            <div class="item-form">
+                <label for="taskDescription"><h2>Description:</h2></label>
+                <textarea type="text" rows="4" name="taskDescription" placeholder="Type a description for your task here."  autocomplete="off" id="taskDescription"><%= item.taskDescription %></textarea>
+            </div>
+            <div class="item-form">
+                <label for="showDescription"><h2>Show Description on card:</h2></label>
+                <% if (item.taskDescriptionShow)
+                    {%><input type="checkbox" name="showDescription" checked>
+                <%} else {%><input type="checkbox" name="showDescription"><%}%>
+            </div>
+            <div class="item-form">
+                <h2>Created on:</h2>
+                <h2><%=item.createDate.toLocaleDateString()%></h2>
+            </div>
+            <div class="item-form">
+                <label for="dueDate"><h2>Due date:</h2></label>
+                <% if (item.dueDate) { %>
+                    <input type="date" name="dueDate" id="dueDate">
+                    <h3><%=item.dueDate.getFullYear()+'-'+item.dueDate.getMonth()+'-'+item.dueDate.getDate()%></h3>
+                    <h3><%=item.dueDate.getFullYear()%></h3>
+                    <h3><%=item.dueDate.getMonth()%></h3>
+                    <h3><%=item.dueDate.getDate()%></h3>
+                <% } else { %>
+                    <input type="date" name="dueDate" id="dueDate">
+                    
+                <% } %>
+                
+            </div>
+            <div class="item-form">
+                <label for="showDueDate"><h2>Show due date on card:</h2></label>
+                <% if (item.taskDueDateShow)
+                    {%><input type="checkbox" name="showDueDate" checked>
+                <%} else {%><input type="checkbox" name="showDueDate"><%}%>
+            </div>
+            <button type="submit" name="itemId" class="update-btn" value= <%= item._id %> ><h2>Submit</h2></button>
+            
+
+        </form>
+    </div>
+    
+    
+<%- include("partials/footer") -%>

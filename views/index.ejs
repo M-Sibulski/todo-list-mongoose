@@ -1,0 +1,45 @@
+<%- include("partials/header") -%>
+    <div class="card">
+        <h1><%= listTitle %>'s ToDo List</h1>
+
+
+        <ul class="todo_items">
+            <% if (items) {
+                items.forEach((item) => {%>
+                    <form action="/update" method="post">
+                        <li class="item" draggable="true">
+                            <div class="item-line">
+                                <% if (item.taskCompleted) 
+                                    {%><input type="checkbox" name="checkbox" checked onchange="submit()">
+                                <%} else {%><input type="checkbox" name="checkbox" onchange="submit()"><%}%>
+                                <a href= <%="/"+listTitle+"/"+item._id%> ><h2 name="item"><%= item.taskName %></h2></a>
+                                
+                                <button type="delete" name="delete" value= <%= item._id %>><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                            
+                            <div class="item-line">
+                                <% if (item.taskDueDateShow && item.dueDate)
+                                    {%><h2 class="due-date"><%= item.dueDate.toLocaleDateString() %></h2>
+                                <%}%>
+                            </div>
+                            <div class="item-line">
+                                <% if (item.taskDescriptionShow && item.taskDescription)
+                                    {%><h2 class="due-date"><%= item.taskDescription %></h2>
+                                <%}%>
+                            </div>
+                            
+                            <input type="hidden" name="listTitle" value= <%= listTitle %>>
+                            <input type="hidden" name="id" value= <%= item._id %>>
+                        </li>
+                    </form>
+                    <hr>
+            <% })} %>
+        </ul>
+
+        <form class="Add" action="/" method="post">
+            <input type="text" name="newToDo" placeholder="Type an activity To Do" autocomplete="off">
+            <button type="submit" name="submit" value= <%= listTitle %> >Add</button>
+        </form>
+    </div>
+    
+<%- include("partials/footer") -%>
